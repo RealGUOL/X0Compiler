@@ -81,10 +81,11 @@ void listcode( )
 		printf("****************************************************************************************************************************************************\n");
 		printf("pcode:\n");
 		printf("%15s %15s %15s %15s %15s %15s\n","id","f","l","a","isd","d");
+		fprintf(fcode, "%15s %15s %15s %15s\n","id","f","l","a");
 		for(i=0;i<=cx-1;i++){
 			printf("%15d %15s %15d %15d %15d %15lf\n",i,mnemonic[(int)code[i].f],code[i].l,code[i].a,code[i].isd,code[i].d);
-			fprintf(fcode,"%2d	%5s	%3d	%5d\n",i,mnemonic[(int)code[i].f],code[i].l,code[i].a);
-			}
+			fprintf(fcode, "%15d %15s %15d %15d %15d %15lf\n",i,mnemonic[(int)code[i].f],code[i].l,code[i].a);
+		}
 		printf("****************************************************************************************************************************************************\n");
 	}
 }

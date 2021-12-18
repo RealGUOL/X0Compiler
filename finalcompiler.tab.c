@@ -1890,6 +1890,10 @@ int compile(const char* filePath)
         printf("Cann't open fresult.txt file!\n");
         exit(0);
     }
+    if((ftable=fopen("ftable.txt","w"))==NULL){
+        printf("Cann't open ftable.txt file!\n");
+        exit(0);
+    }
     yyparse();
     if(err==0)
     {
