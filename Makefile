@@ -1,9 +1,8 @@
 all: prog clean
 
-prog:   compiler.l compiler.y
-	lex compiler.l
-	bison -d compiler.y
-	gcc -g -o compiler  lex.yy.c compiler.tab.c -lm
+prog:   finalcompiler.l finalcompiler.y
+	flex -L finalcompiler.l
+	bison -d -l finalcompiler.y
 
 clean:  
-	rm lex.yy.c compiler.tab.c compiler.tab.h
+	rm lex.yy.c finalcompiler.tab.c finalcompiler.tab.h

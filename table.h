@@ -1,11 +1,11 @@
-#include "stdio.h"
-#include "string.h"
+#include <stdio.h>
+#include <string.h>
 
 #define TXMAX 100
 #define AL 20
 #define LEVMAX 3
 #define AMAX 65535
-#define STACKSIZE 100000
+#define STACKSIZE 1000
 
 int lev=0;
 int tx=0;

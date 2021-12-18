@@ -1,6 +1,12 @@
-compiler
-compiler.tab.c
-compiler.tab.h
+a.exe
+finalcompiler.tab.c
+finalcompiler.tab.h
 lex.yy.c
 fin.txt
 core
+.vscode
+.vscode/*
+fcode.txt
+ferrout.txt
+fresult.txt
+
