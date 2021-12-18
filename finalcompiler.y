@@ -735,39 +735,18 @@ void yyerror(char *s){
     fprintf(ferrout,"%s in line %d\n",s,line);
 }
 
-int main(int argc,char *argv[])
+int compile(const char* filePath)
 {
     int i;
-    listswitch=false;
-    int print_table=0;
-    if (argc > 1) {
-        for (i = 1; i < argc; i++)
-        {
-            if (strcmp(argv[i], "-c")==0)
-            {
-                listswitch=true;
-            }else if (strcmp(argv[i], "-t")==0)
-            {
-                print_table=1;
-            }
-            else if ((strcmp(argv[i], "-f")==0) && (argc > i+1))
-            {
-                yyin = fopen(argv[++i],"r");
-            }
-            else if(argc>i){
-                yyin = fopen(argv[i],"r");
-            }
-            else
-            {
+    listswitch=true;
+    int print_table=1;
+    yyin = fopen(filePath,"r");
 
-            }
-        }
-    }
     printf("x0 compiler\n");
     if((ferrout=fopen("ferrout.txt","w"))==NULL){
         printf("Cann't open file!\n");
         exit(0);
-        }
+    }
     if((fcode=fopen("fcode.txt","w"))==NULL){
         printf("Cann't open fcode.txt file!\n");
         exit(0);
@@ -782,7 +761,6 @@ int main(int argc,char *argv[])
         listcode();
         interpret();
     }
-    
     else
         printf("%d errors in PL/0 program\n",err);
     if(print_table){

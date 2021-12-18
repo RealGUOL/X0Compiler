@@ -1,7 +1,4 @@
 a.exe
-finalcompiler.tab.c
-finalcompiler.tab.h
-lex.yy.c
 fin.txt
 core
 .vscode
