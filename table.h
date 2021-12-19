@@ -42,12 +42,12 @@ struct table1{
 	enum object kind;                  // 类型：const，var或procedure
 	enum type_e type;                  // 具体类型
 	int val;                           // 数值，仅const使用
-	int adr;                           // 地址，仅const不使用
+	int adr;                           // 地址，仅const不使用，如果kind=var，则表示变量在堆栈中的地址；如果kind=procedure，则表示过程在程序地址
 	int size;                          // 需要分配的数据区空间, 仅procedure使用
 	int array;                         // 当前符号是否是数组
 	int array_dim;                     // array 维度
 	double val_d;                      // 数值，仅const使用
-	struct list* array_size;
+	struct list* array_size;           // 记录多维数组每一维度大小
 	};
 struct table1 table[TXMAX+1];        // 符号表
 

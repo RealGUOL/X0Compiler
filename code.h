@@ -24,8 +24,8 @@ struct instruction{
 	enum fct f;             // 虚拟机代码指令
 	int l;                  // 引用层与声明层的层次差
 	int a;                  // 根据f的不同而不同
-	int isd;
-	double d;
+	int isd;                // 是否是double类型
+	double d;               // double类型的值
 };
 struct instruction code[CXMAX+1];  // 存放虚拟机代码的数组
 
@@ -164,7 +164,7 @@ void interpret()
 		i=code[p];  // 读当前指令
 		p=p+1;
 		switch(i.f){
-			case lit:
+			case lit:  // 将常量a的值取到栈顶
 				t=t+1;
 				if(i.isd){
 					s[t].type=double_tt;
@@ -174,7 +174,7 @@ void interpret()
 					s[t].vi=i.a;
 				}
 				break;
-			case opr:
+			case opr:  // 数学、逻辑运算
 				switch(i.a){
 					case 0:
 						p=0;
