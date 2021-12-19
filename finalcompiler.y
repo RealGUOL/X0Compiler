@@ -772,5 +772,6 @@ int compile(const char* filePath)
     }
     fclose(fcode);
     fclose(ferrout);
+    fclose(ftable);
     return 0;
 }
