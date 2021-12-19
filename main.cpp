@@ -4,5 +4,5 @@ extern "C" {
 
 
 int main() {
-  compile("samples/lcm.x0");
+  compile("samples/array_double.x0");
 }

@@ -84,40 +84,41 @@ const_list:
 
 const_dec:
     CONST INT ID BECOMES NUM  SEMICOLON     {
-                                                type=int_t;
-                                                strcpy(id,$3);
-                                                num=$5;
-                                                enter(constant);
+                                                type=int_t;         /* 整型标识符 */
+                                                strcpy(id,$3);      /* 获得标识符的名字 */
+                                                num=$5;             /* 记录标识符的值 */
+                                                enter(constant);    /* 进入符号表 */
                                             } 
     |CONST DOUBLE ID BECOMES NUM_D  SEMICOLON   {
-                                                    type=double_tt;
-                                                    strcpy(id,$3);
-                                                    num_d=$5;
-                                                    enter(constant);
+                                                    type=double_tt; /* 浮点型标识符 */
+                                                    strcpy(id,$3);  /* 获得标识符的名字 */
+                                                    num_d=$5;       /* 记录标识符的值 */
+                                                    enter(constant);/* 进入符号表 */
                                                 } 
     |CONST CHAR ID BECOMES NUM  SEMICOLON   {
-                                                type=char_t;
-                                                strcpy(id,$3);
-                                                num=$5;
-                                                enter(constant);
+                                                type=char_t;        /* char型标识符 */
+                                                strcpy(id,$3);      /* 获得标识符的名字 */
+                                                num=$5;             /* 记录标识符的值 */
+                                                enter(constant);    /* 进入符号表 */
                                             } 
     |CONST BOOL ID BECOMES NUM SEMICOLON    {
-                                                type=bool_t;
-                                                strcpy(id,$3);
-                                                num=$5;
-                                                enter(constant);
+                                                type=bool_t;        /* 布尔型标识符 */
+                                                strcpy(id,$3);      /* 获得标识符的名字 */
+                                                num=$5;             /* 记录标识符的值 */
+                                                enter(constant);    /* 进入符号表 */
                                             }
     ;
 
 declaration_list:
      declaration_list declaration_stat  {
-                                            procReg.dx0=dx;
+                                            procReg.dx0=dx;          /* 记录当前数据分配的相对地址 */
                                         }
      | {}
      ;
 
 declaration_stat:
     type ID array_size SEMICOLON    {
+                                        /* 记录ID的类型 */
                                         if(strcmp($1,"int")==0){
                                             type=int_t;
                                         } else if(strcmp($1,"char")==0){
@@ -130,22 +131,18 @@ declaration_stat:
                                             type=none_t;
                                         }
 
-                                        if(array==1){
-                                            strcpy(id,$2);
-                                            enter(variable);
-                                        }else
-                                        {
-                                            strcpy(id,$2);
-                                            enter(variable);
-                                        }
+                                        /* 进入符号表 */
+                                        strcpy(id,$2);
+                                        enter(variable);
                                         type=none_t;
                                     }
     ;
 
 array_size:
     array_size LBRACKETS NUM RBRACKETS      {
-                                                array=1;
-                                                array_dim++;
+                                                array=1;        /* array=1，表明是数组 */
+                                                array_dim++;    /* 记录维度 */
+                                                /* 记录每个维度大小 */
                                                 array_size=list_add(array_size,$3);
                                             }
     |   {   
@@ -155,7 +152,7 @@ array_size:
         }
     ;
 type:
-    INT {$$=$1;}
+    INT {$$=$1;}      /* 记录标识符具体type */
     |DOUBLE {$$=$1;}
     |CHAR {$$=$1;}
     |BOOL {$$=$1;}
@@ -163,7 +160,7 @@ type:
 
 var:
     ID  {
-            int i = position ($1);
+            int i = position ($1);    /* 符号表中查找变量 */
             if(i<=0){
                 char s[50];
                 sprintf(s,"variable %s undefined!", $1);
@@ -213,10 +210,10 @@ break_stat:
                         if(loop_pos>=LOOPMAX){
                             syntax_error("too many breaks or continues.");
                         }
-                        loopReg[loop_pos].cx=cx;
-                        loopReg[loop_pos].type=brk;
+                        loopReg[loop_pos].cx=cx;    /* 记录当前层代码开始地址 */
+                        loopReg[loop_pos].type=brk; /* 记录是否跳出循环 */
                         loopReg[loop_pos].level=loop_level;
-                        gen(jmp,0,0);
+                        gen(jmp,0,0);  /* 产生跳转指令，跳转位置未知添0 */
                     }
     ;
 
@@ -229,7 +226,7 @@ continue_stat:
                                 loopReg[loop_pos].cx=cx;
                                 loopReg[loop_pos].type=ctn;
                                 loopReg[loop_pos].level=loop_level;
-                                gen(jmp,0,0);
+                                gen(jmp,0,0);/* 产生跳转指令，跳转位置未知填0 */
                             }
     ;
 
@@ -255,10 +252,10 @@ for_stat:
                                                 if(loopReg[i].level==loop_level){
                                                     switch(loopReg[i].type){
                                                         case brk:
-                                                            code[loopReg[i].cx].a=cx;
+                                                            code[loopReg[i].cx].a=cx;  /*跳转地址回填*/
                                                             break;
                                                         case ctn:
-                                                            code[loopReg[i].cx].a=$8+2;
+                                                            code[loopReg[i].cx].a=$8+2; /*跳转地址回填*/
                                                             break;
                                                     }
                                                 }
