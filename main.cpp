@@ -4,5 +4,5 @@ extern "C" {
 
 
 int main() {
-  compile("samples/test.x0");
+  compile("samples/lcm.x0");
 }

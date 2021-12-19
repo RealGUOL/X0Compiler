@@ -65,3 +65,5 @@ struct databus* db;
 
 
 extern YYSTYPE yylval;
+
+int compile(const char* filePath);
